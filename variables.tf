@@ -243,36 +243,6 @@ variable "public_network_access_enabled" {
   description = "This variable controls whether or not public network access is enabled for the module."
 }
 
-variable "shared_private_link_services" {
-  type = map(object({
-    name               = string
-    subresource_name   = string
-    target_resource_id = string
-    request_message    = optional(string, null)
-    timeouts = optional(object({
-      create = optional(string, null)
-      delete = optional(string, null)
-      read   = optional(string, null)
-      update = optional(string, null)
-    }), null)
-  }))
-  default     = {}
-  description = <<DESCRIPTION
-A map of shared private link services to create on the Search Service. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
-
-- `name` - (Required) The name of the Shared Private Link Service.
-- `subresource_name` - (Required) The sub resource name which the Search Service Private Endpoint is able to connect to. Possible values are `blob`, `table`, `queue`, `file`, `web`, `dfs`, `blob_secondary`, `table_secondary`, `queue_secondary`, `file_secondary`, `web_secondary`, `dfs_secondary`, `sites`, `vault`, `mysqlServer`, `postgresqlServer`, `sqlServer`, `redisCache`, and `mariadbServer`.
-- `target_resource_id` - (Required) The resource ID of the Private Link Enabled Resource which the Search Service Shared Private Link Service should be connected to.
-- `request_message` - (Optional) The request message for requesting the Shared Private Link Service.
-- `timeouts` - (Optional) An optional block to specify custom timeouts.
-  - `create` - (Optional) Timeout for create operations.
-  - `delete` - (Optional) Timeout for delete operations.
-  - `read` - (Optional) Timeout for read operations.
-  - `update` - (Optional) Timeout for update operations.
-DESCRIPTION
-  nullable    = false
-}
-
 variable "replica_count" {
   type        = number
   default     = 1
@@ -315,6 +285,36 @@ variable "semantic_search_sku" {
   type        = string
   default     = null
   description = "(Optional) Specifies the Semantic Search SKU which should be used for this Search Service. Possible values include `free` and `standard`."
+}
+
+variable "shared_private_link_services" {
+  type = map(object({
+    name               = string
+    subresource_name   = string
+    target_resource_id = string
+    request_message    = optional(string, null)
+    timeouts = optional(object({
+      create = optional(string, null)
+      delete = optional(string, null)
+      read   = optional(string, null)
+      update = optional(string, null)
+    }), null)
+  }))
+  default     = {}
+  description = <<DESCRIPTION
+A map of shared private link services to create on the Search Service. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
+
+- `name` - (Required) The name of the Shared Private Link Service.
+- `subresource_name` - (Required) The sub resource name which the Search Service Private Endpoint is able to connect to. Possible values are `blob`, `table`, `queue`, `file`, `web`, `dfs`, `blob_secondary`, `table_secondary`, `queue_secondary`, `file_secondary`, `web_secondary`, `dfs_secondary`, `sites`, `vault`, `mysqlServer`, `postgresqlServer`, `sqlServer`, `redisCache`, and `mariadbServer`.
+- `target_resource_id` - (Required) The resource ID of the Private Link Enabled Resource which the Search Service Shared Private Link Service should be connected to.
+- `request_message` - (Optional) The request message for requesting the Shared Private Link Service.
+- `timeouts` - (Optional) An optional block to specify custom timeouts.
+  - `create` - (Optional) Timeout for create operations.
+  - `delete` - (Optional) Timeout for delete operations.
+  - `read` - (Optional) Timeout for read operations.
+  - `update` - (Optional) Timeout for update operations.
+DESCRIPTION
+  nullable    = false
 }
 
 variable "sku" {

@@ -46,6 +46,7 @@ The following resources are used by this module:
 - [azurerm_private_endpoint_application_security_group_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint_application_security_group_association) (resource)
 - [azurerm_role_assignment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
 - [azurerm_search_service.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/search_service) (resource)
+- [azurerm_search_shared_private_link_service.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/search_shared_private_link_service) (resource)
 - [modtm_telemetry.telemetry](https://registry.terraform.io/providers/Azure/modtm/latest/docs/resources/telemetry) (resource)
 - [random_uuid.telemetry](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) (resource)
 - [azapi_client_config.telemetry](https://registry.terraform.io/providers/Azure/azapi/latest/docs/data-sources/client_config) (data source)
@@ -357,6 +358,39 @@ Type: `string`
 
 Default: `null`
 
+### <a name="input_shared_private_link_services"></a> [shared\_private\_link\_services](#input\_shared\_private\_link\_services)
+
+Description: A map of shared private link services to create on the Search Service. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
+
+- `name` - (Required) The name of the Shared Private Link Service.
+- `subresource_name` - (Required) The sub resource name which the Search Service Private Endpoint is able to connect to. Possible values are `blob`, `table`, `queue`, `file`, `web`, `dfs`, `blob_secondary`, `table_secondary`, `queue_secondary`, `file_secondary`, `web_secondary`, `dfs_secondary`, `sites`, `vault`, `mysqlServer`, `postgresqlServer`, `sqlServer`, `redisCache`, and `mariadbServer`.
+- `target_resource_id` - (Required) The resource ID of the Private Link Enabled Resource which the Search Service Shared Private Link Service should be connected to.
+- `request_message` - (Optional) The request message for requesting the Shared Private Link Service.
+- `timeouts` - (Optional) An optional block to specify custom timeouts.
+  - `create` - (Optional) Timeout for create operations.
+  - `delete` - (Optional) Timeout for delete operations.
+  - `read` - (Optional) Timeout for read operations.
+  - `update` - (Optional) Timeout for update operations.
+
+Type:
+
+```hcl
+map(object({
+    name               = string
+    subresource_name   = string
+    target_resource_id = string
+    request_message    = optional(string, null)
+    timeouts = optional(object({
+      create = optional(string, null)
+      delete = optional(string, null)
+      read   = optional(string, null)
+      update = optional(string, null)
+    }), null)
+  }))
+```
+
+Default: `{}`
+
 ### <a name="input_sku"></a> [sku](#input\_sku)
 
 Description: (Required) The pricing tier of the search service you want to create (for example, basic or standard).
@@ -388,6 +422,10 @@ Description: This is the full output for the resource.
 ### <a name="output_resource_id"></a> [resource\_id](#output\_resource\_id)
 
 Description: The ID of the machine learning workspace.
+
+### <a name="output_shared_private_link_services"></a> [shared\_private\_link\_services](#output\_shared\_private\_link\_services)
+
+Description: A map of shared private link services. The map key is the supplied input to var.shared\_private\_link\_services. The map value is the entire azurerm\_search\_shared\_private\_link\_service resource.
 
 ## Modules
 

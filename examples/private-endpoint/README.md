@@ -119,20 +119,6 @@ module "search_service" {
   sku                           = "standard"
 }
 
-resource "azurerm_private_dns_a_record" "this" {
-  for_each = module.search_service.private_endpoints
-
-  name                = module.search_service.resource.name
-  records             = [each.value.private_service_connection[0].private_ip_address]
-  resource_group_name = azurerm_resource_group.this.name
-  ttl                 = 300
-  zone_name           = azurerm_private_dns_zone.this.name
-  tags                = var.tags
-}
-
-
-
-
 ```
 
 <!-- markdownlint-disable MD033 -->
@@ -150,7 +136,6 @@ The following requirements are needed by this module:
 
 The following resources are used by this module:
 
-- [azurerm_private_dns_a_record.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_dns_a_record) (resource)
 - [azurerm_private_dns_zone.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_dns_zone) (resource)
 - [azurerm_private_dns_zone_virtual_network_link.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_dns_zone_virtual_network_link) (resource)
 - [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
