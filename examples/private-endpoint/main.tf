@@ -112,17 +112,3 @@ module "search_service" {
   sku                           = "standard"
 }
 
-resource "azurerm_private_dns_a_record" "this" {
-  for_each = module.search_service.private_endpoints
-
-  name                = module.search_service.resource.name
-  records             = [each.value.private_service_connection[0].private_ip_address]
-  resource_group_name = azurerm_resource_group.this.name
-  ttl                 = 300
-  zone_name           = azurerm_private_dns_zone.this.name
-  tags                = var.tags
-}
-
-
-
-

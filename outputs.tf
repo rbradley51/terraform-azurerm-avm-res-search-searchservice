@@ -14,3 +14,9 @@ output "resource_id" {
   description = "The ID of the machine learning workspace."
   value       = azurerm_search_service.this.id
 }
+
+output "shared_private_link_services" {
+  description = "A map of shared private link services. The map key is the supplied input to var.shared_private_link_services. The map value is the entire azurerm_search_shared_private_link_service resource."
+  value       = azurerm_search_shared_private_link_service.this
+}
+
