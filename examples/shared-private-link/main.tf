@@ -103,7 +103,7 @@ resource "azurerm_storage_account" "storage" {
   account_replication_type = "LRS"
   account_tier             = "Standard"
   location                 = azurerm_resource_group.this.location
-  name                     = "${module.naming.storage_account.name_unique}01"
+  name                     = module.naming.storage_account.name_unique
   resource_group_name      = azurerm_resource_group.this.name
   tags                     = var.tags
 
@@ -156,10 +156,10 @@ module "search_service" {
     }
   }
   public_network_access_enabled = false
-  # Shared Private Link Services to Storage Accounts
+  # Shared Private Link Services to Storage Account
   shared_private_link_services = {
-    spls_blob = {
-      name               = "spls-${azurerm_storage_account.storage.name}-blob"
+    spl_blob = {
+      name               = "spl-${azurerm_storage_account.storage.name}-blob"
       subresource_name   = "blob"
       target_resource_id = azurerm_storage_account.storage.id
       request_message    = "Please approve shared private link for blob access"

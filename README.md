@@ -363,7 +363,7 @@ Default: `null`
 Description: A map of shared private link services to create on the Search Service. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
 
 - `name` - (Required) The name of the Shared Private Link Service.
-- `subresource_name` - (Required) The sub resource name which the Search Service Private Endpoint is able to connect to. Possible values are `blob`, `table`, `queue`, `file`, `web`, `dfs`, `blob_secondary`, `table_secondary`, `queue_secondary`, `file_secondary`, `web_secondary`, `dfs_secondary`, `sites`, `vault`, `mysqlServer`, `postgresqlServer`, `sqlServer`, `redisCache`, and `mariadbServer`.
+- `subresource_name` - (Required) The sub resource name which the Search Service Private Endpoint is able to connect to. Possible values include `blob`, `table`, `dfs`, `file`, `Sql`, `sqlServer`, `vault`, `mysqlServer`, `sites`, `managedInstance`, `openai_account`, `cognitiveservices_account`, and `workspace`.
 - `target_resource_id` - (Required) The resource ID of the Private Link Enabled Resource which the Search Service Shared Private Link Service should be connected to.
 - `request_message` - (Optional) The request message for requesting the Shared Private Link Service.
 - `timeouts` - (Optional) An optional block to specify custom timeouts.
